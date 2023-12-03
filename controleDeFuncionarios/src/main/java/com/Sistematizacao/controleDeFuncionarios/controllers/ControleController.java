@@ -22,10 +22,10 @@ import com.Sistematizacao.controleDeFuncionarios.models.ControleModel;
 public class ControleController {
 
 	@Autowired
-	ControleRepository controlerRepository;
+	ControleRepository controleRepository;
 	
 	@PostMapping("/controleDeFuncionarios")
-	public ResponseEntity<ControleModel> salvar(@RequestBody @Valid ControleDto controlerDto) {
+	public ResponseEntity<ControleModel> salvar(@RequestBody @Valid ControleDto controleDto) {
 		var controleModel = new ControleModel();
 		BeanUtils.copyProperties(controleDto, controleModel);
 		return ResponseEntity.status(HttpStatus.CREATED).body(controleRepository.save(controleModel));
@@ -33,22 +33,22 @@ public class ControleController {
 	
 	@GetMapping("/controleDeFuncionarios")
 	public ResponseEntity<List<ControleModel>> listar(){
-		List<ControleModel> controlerList = controleRepository.findAll();
+		List<ControleModel> controleList = controleRepository.findAll();
 		return ResponseEntity.status(HttpStatus.OK).body(controleList);
 	}
 	
 	@GetMapping("/controleDeFuncionarios/{id}")
 	public ResponseEntity<Object> detalhar(@PathVariable(value="id") Integer id){
-		Optional<ControleModel> controler = controleRepository.findById(id);
+		Optional<ControleModel> controle = controleRepository.findById(id);
 		if(controle.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Filme não encontrado exibição.");
 		}
-		return ResponseEntity.status(HttpStatus.OK).body(controler.get());
+		return ResponseEntity.status(HttpStatus.OK).body(controle.get());
 	}
 	
 	@DeleteMapping("/controleDeFuncionarios/{id}")
 	public ResponseEntity<Object> deleteProduct(@PathVariable(value="id") Integer id) {
-		Optional<ControleModel> controler = controleRepository.findById(id);
+		Optional<ControleModel> controle = controleRepository.findById(id);
 		if(controle.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Filme não encontrado para exclusão.");
 		}
@@ -58,8 +58,8 @@ public class ControleController {
 	
 	@PutMapping("/controleDeFuncionarios/{id}")
 	public ResponseEntity<Object> updateProduct(@PathVariable(value="id") Integer id,
-													  @RequestBody @Valid controleDto controleDto) {
-		Optional<ControleModel> filme = controleRepository.findById(id);
+													  @RequestBody @Valid ControleDto controleDto) {
+		Optional<ControleModel> controle = controleRepository.findById(id);
 		if(controle.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Filme não encontrado para edição.");
 		}
